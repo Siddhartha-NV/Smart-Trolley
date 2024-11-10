@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Trolley - QR Scanner</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Include the HTML5 QR Code Library -->
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #4CAF50, #388E3C);
+            font-family: Arial, sans-serif;
+            color: white;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+        }
+        #reader {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            border: 2px solid #fff;
+            border-radius: 10px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Scan QR Code to View Product</h2>
+        <div id="reader"></div>
+        <p id="result">Scanning...</p>
+    </div>
+
+    <script>
+        function onScanSuccess(decodedText, decodedResult) {
+            console.log(`QR Code scanned: ${decodedText}`);
+            document.getElementById('result').textContent = `Scanned Data: ${decodedText}`;
+            
+            // Optional: Navigate to a product details page with QR data
+            window.location.href = `product.html?data=${encodeURIComponent(decodedText)}`;
+        }
+
+        function onScanFailure(error) {
+            console.warn(`QR Code scan error: ${error}`);
+        }
+
+        // Initialize the QR Code Scanner
+        const html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader",
+            {
+                fps: 10,
+                qrbox: { width: 250, height: 250 }
+            },
+            false
+        );
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    </script>
+</body>
+</html>
+    

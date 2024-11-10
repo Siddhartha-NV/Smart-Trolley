@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Scanner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <img src="assets/logo.png" alt="Smart Trolley Logo" class="logo">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="scanner.html">Product Scanner</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="payment.html">Payment</a></li>
+            <li><a href="admin.html">Admin Dashboard</a></li>
+            <li><a href="generateQR.html">Generate QR</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h2>Product Scanner</h2>
+        <input type="text" id="rfidInput" placeholder="Scan Product by RFID" autofocus>
+        <button onclick="scanProduct()">Scan Product</button>
+        <div id="productDisplay"></div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

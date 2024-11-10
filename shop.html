@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Trolley - Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <img src="https://via.placeholder.com/100x50?text=Smart+Trolley+Logo" alt="Smart Trolley Logo" class="logo">
+        <ul>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="cart.html">My Cart</a></li>
+            <li><a href="admin.html">Admin Dashboard</a></li>
+            <li><a href="generateQR.html">Generate QR</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h2>Available Products</h2>
+        <div id="productList"></div>
+    </section>
+
+    <script>
+        // Sample product list with online images
+        const products = [
+            { id: 1, name: 'Apple', price: 1.5, img: 'https://i.imgur.com/1a1hC6B.jpg' },
+            { id: 2, name: 'Milk', price: 2.0, img: 'https://i.imgur.com/AX1zZYr.jpg' },
+            { id: 3, name: 'Bread', price: 1.0, img: 'https://i.imgur.com/zbAkU8t.jpg' },
+            { id: 4, name: 'Orange Juice', price: 2.5, img: 'https://i.imgur.com/E0M9w2O.jpg' },
+            { id: 5, name: 'Eggs', price: 3.0, img: 'https://i.imgur.com/r3P5C3N.jpg' }
+        ];
+
+        // Function to display products
+        function displayProducts() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = ''; // Clear previous content
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <img src="${product.img}" alt="${product.name}" class="product-image">
+                    <h3>${product.name}</h3>
+                    <p>Price: $${product.price.toFixed(2)}</p>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                `;
+                productList.appendChild(productCard);
+            });
+        }
+
+        // Function to add product to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart.push(product);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                alert(`${product.name} added to cart!`);
+            }
+        }
+
+        // Load products on page load
+        window.onload = displayProducts;
+    </script>
+</body>
+</html>

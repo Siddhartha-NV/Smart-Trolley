@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Product Details</h2>
+        <div id="product-info"></div>
+        <button id="add-to-cart">Add to Cart</button>
+        <a href="cart.html">Go to Cart</a>
+    </div>
+
+    <script>
+        // Extract data from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productData = urlParams.get('data');
+
+        // Convert QR code data to object (assuming JSON format)
+        const product = JSON.parse(decodeURIComponent(productData));
+
+        // Display product details
+        const productInfoDiv = document.getElementById('product-info');
+        productInfoDiv.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" class="product-image">
+            <h3>${product.name}</h3>
+            <p>Price: $${product.price.toFixed(2)}</p>
+            <p>${product.description}</p>
+        `;
+
+        // Add product to cart
+        document.getElementById('add-to-cart').addEventListener('click', () => {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(`${product.name} added to cart!`);
+        });
+    </script>
+</body>
+</html>

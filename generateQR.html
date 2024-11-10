@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment QR Code Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <img src="assets/logo.png" alt="Smart Trolley Logo" class="logo">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="scanner.html">Product Scanner</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="payment.html">Payment</a></li>
+            <li><a href="admin.html">Admin Dashboard</a></li>
+            <li><a href="generateQR.html">Generate QR</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h2>Generate Payment QR Code</h2>
+        <form id="paymentForm">
+            <label for="amount">Enter Payment Amount ($):</label>
+            <input type="number" id="amount" placeholder="Enter amount" required>
+            
+            <label for="userId">Enter User ID:</label>
+            <input type="text" id="userId" placeholder="User ID" required>
+            
+            <button type="button" onclick="generatePaymentQR()">Generate QR Code</button>
+        </form>
+        
+        <div id="qrCodeContainer">
+            <h3>Scan to Pay</h3>
+            <div id="qrCode"></div>
+        </div>
+    </section>
+
+    <!-- Include QRCode Library -->
+    <script src="qrcode.min.js"></script>
+    <script>
+        function generatePaymentQR() {
+            // Get input values
+            const amount = document.getElementById('amount').value;
+            const userId = document.getElementById('userId').value;
+
+            if (amount && userId) {
+                const paymentInfo = {
+                    userId: userId,
+                    amount: amount,
+                    currency: 'USD',
+                    timestamp: new Date().toISOString(),
+                };
+
+                // Convert payment info to a query string
+                const queryString = new URLSearchParams(paymentInfo).toString();
+                
+                // Define the payment URL
+                const paymentUrl = `https://yourpaymentgateway.com/pay?${queryString}`;
+
+                // Clear the previous QR code
+                const qrCodeContainer = document.getElementById('qrCode');
+                qrCodeContainer.innerHTML = '';
+
+                // Generate QR code
+                new QRCode(qrCodeContainer, {
+                    text: paymentUrl,
+                    width: 200,
+                    height: 200,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff"
+                });
+            } else {
+                alert("Please enter all required fields.");
+            }
+        }
+    </script>
+</body>
+</html>

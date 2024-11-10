@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <img src="assets/logo.png" alt="Smart Trolley Logo" class="logo">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="scanner.html">Product Scanner</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="payment.html">Payment</a></li>
+            <li><a href="admin.html">Admin Dashboard</a></li>
+            <li><a href="generateQR.html">Generate QR</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h2>Payment</h2>
+        <p>Total Amount: $<span id="totalPayment">0.00</span></p>
+        <button onclick="generatePaymentQR()">Generate Payment QR Code</button>
+        <div id="qrCode"></div>
+    </section>
+
+    <script src="qrcode.min.js"></script>
+    <script>
+        const totalAmount = localStorage.getItem('totalAmount') || 0;
+
+        // Display the total amount
+        document.getElementById('totalPayment').textContent = totalAmount;
+
+        // Generate Payment QR Code
+        function generatePaymentQR() {
+            const qrCodeContainer = document.getElementById('qrCode');
+            qrCodeContainer.innerHTML = '';
+            const qr = new QRCode(qrCodeContainer, {
+                text: `Pay $${totalAmount}`,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff"
+            });
+        }
+    </script>
+</body>
+</html>

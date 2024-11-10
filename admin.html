@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <img src="assets/logo.png" alt="Smart Trolley Logo" class="logo">
+        <ul>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="cart.html">My Cart</a></li>
+            <li><a href="admin.html">Admin Dashboard</a></li>
+            <li><a href="generateQR.html">Generate QR</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h2>Admin Dashboard - Manage Stock</h2>
+        <div id="adminPanel"></div>
+    </section>
+
+    <script>
+        // Admin can view stock details
+        function loadStock() {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const adminPanel = document.getElementById('adminPanel');
+            adminPanel.innerHTML = '<h3>Available Stock</h3>';
+            
+            if (products.length > 0) {
+                products.forEach(product => {
+                    adminPanel.innerHTML += `<p>${product.name}: ${product.stock} units</p>`;
+                });
+            } else {
+                adminPanel.innerHTML += '<p>No products available.</p>';
+            }
+        }
+
+        // Load stock on page load
+        window.onload = loadStock;
+    </script>
+</body>
+</html>
